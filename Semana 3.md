@@ -36,3 +36,7 @@ Notas:
 - En `ServidorDeDisparo.java`, los métodos son `synchronized` para que no vaya a entrar otro hilo cuando el método sea sacado de la memoria, y evitar que *se haga bolas el engrudo*; que las variables almacenadas en el Heap se mantengengan como estaban.
 
 - Tarea: crear otro testRMI.jar para que haga sumas en vez de solamente decir "hola". Tenemos que modificar la interfaz (hello), la implementación de la intrfaz y luego el cliente.
+---
+Notas:
+- Cuando ponemos `@WebService` o `@WebMethod` estamos haciendo **anotaciones**, que sirven para inyectar código cuando se mande llamar el método.
+- No enviar objetos por protocolos en los que no controlamos lo que sucede al otro lado. Solamente conviene enviar los escalares (que sí sean `final`) necesarios para reconstruir al objeto.
