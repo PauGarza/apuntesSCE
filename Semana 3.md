@@ -35,8 +35,58 @@ Notas:
 - `Class.forName`. Recordemos que Java, al invocar una clase, la levanta y la echa a andar. Busca la clase en el class path y la pone en l amemoria. Todavía no sabe si va a tener instancias de esa clase o no, pero se supone que ahí hay un main y a éste le transfiere el control. Por lo tanto, cada vez que uno quiera usar una clase, la busca en la memoria; si no la encuentra, lanza una excepción. Esto es lo que hace `Class.forName`: busca la clase en la memoria.
 - En `ServidorDeDisparo.java`, los métodos son `synchronized` para que no vaya a entrar otro hilo cuando el método sea sacado de la memoria, y evitar que *se haga bolas el engrudo*; que las variables almacenadas en el Heap se mantengengan como estaban.
 
-- Tarea: crear otro testRMI.jar para que haga sumas en vez de solamente decir "hola". Tenemos que modificar la interfaz (hello), la implementación de la intrfaz y luego el cliente.
+- Tarea: crear otro testRMI.jar para que haga sumas en vez de solamente decir "hola". Tenemos que modificar la interfaz (hello), la implementación de la interfaz y luego el cliente.
 ---
 Notas:
 - Cuando ponemos `@WebService` o `@WebMethod` estamos haciendo **anotaciones**, que sirven para inyectar código cuando se mande llamar el método.
 - No enviar objetos por protocolos en los que no controlamos lo que sucede al otro lado. Solamente conviene enviar los escalares (que sí sean `final`) necesarios para reconstruir al objeto.
+- **In-place deployment**: cuando glassfish no quiere copiar todo y en vez de eso refiere todo al `.war`.
+- Cuando probamos la aplicación, glassfish nos deja ver el WSDL. Esto sirve para comunicarse con clientes que tienen otra tecnología. El URL que se abre al hacer click ahí también es muy importante. Podemos cambiar `localhost` por la IP de nuestra máquina. 
+- Proxy: lo que está en una punta para hacer creer al servicio que está cerca.
+
+1. Levantar el servidor.
+2. Click derecho en `SumaWeb` en la parte de Projects y darle en "Clean and build". El output debería decir que el Building jar está en `C:\SCE\SumaWeb\SumaWeb\dist\SumaWeb.war`.
+3. Click derecho en `WSSUMA` y darle en deploy.
+4. Probar el método `hello`: escribir algo en la entrada de texto y hacer click en el botón que dice hello.
+5. Podemos, con F12, abrir la consola y ver qué hay detrás. Igual podemos abrir la pestaña de Red y hacernos los interesantes.
+
+## Para el cliente
+1. Crear un nuevo proyecto (Java Application) y nombrarlo `PojoTestWSuma`.
+2. File > New > New Web Service Client. Seleccionar "WSDL URL" y pegar el URL que conseguimos al cambiar el `localhost` por nuestra IP en el WSDL. 
+	- Obsérvese que, al expandir la carpeta de Web Service References, ahora está el archivo `suma.wsdl`.
+3. En PojoTestWSuma.java, hacer click derecho y luego en "Insert Code..." > "Call Web Service Operation...". Expandir las carpetas hasta llegar a `sumaPort` y seleccionar `suma`. Click en OK. Se debería generar el siguiente código debajo (**no** dentro) del método principal:
+```java
+private static int suma(int a, int b) {
+	wssuma.Suma_Service service = new wssuma.Suma_Service();
+	wssuma.Suma port = service.getSumaPort();
+	return port.suma(a, b);
+}
+```
+
+> "Esto es como una llamda al rmi, pero con Web Service."
+> — Alexander
+
+4. Dentro del método principal, escribir:
+```java
+int a, b, c;
+a = 3;
+b = 5;
+c = suma(a, b);
+System.out.println("La suma de " + a + " y " + b + " es " + c);
+```
+- Nota: como en el paso 3 tenemos un `new`, cada vez que queramos hacer una suma tendríamos que instanciar un nuevo servicio; esto no es bueno, por lo que nos convendría más sacar eso del método y escribirla en el principal, antes de hacer todas las sumas. Hagamos eso. Why not.
+5. Modificar el método principal para que tenga:
+```java
+wssuma.Suma_Service service = new wssuma.Suma_Service();
+wssuma.Suma port = service.getSumaPort();
+
+int a, b, c;
+a = 3;
+b = 5;
+c = port.suma(a, b);
+System.out.println("La suma de " + a + " y " + b + " es " + c);
+```
+6. Comentar el método `private static int suma(int a, int b)` para que no haga nada.
+7. Correr el proyecto (PojoTestWSuma) y verificar que salga la suma en la consola.
+
+**Lo que va a venir en el examen:** copiar este código en el del RMI para que, en vez de conectarse al servidor del RMI, se conecte al otro y que podamos estresarlo (con lo del paso 0, 1, etc.).
