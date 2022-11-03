@@ -17,11 +17,12 @@ Repaso (ver foto que tomó Sonia):
 
 ## Lo que hicimos hoy
 1. Descargar `tstRMI` de Canvas y descomprimir los archivos en la carpeta `SCEBeto`. 
-2. Revisar en File > Project Properties (tstRMI) > Run que en Main Class esté `example.hello.Distribuidor`.
-3. Arrancar el Glassfish Server.
-4. Crear un nuevo proyecto Web llamado `WSSUMA`. Asegurarse de que el servidor es glassfish y crear todo en default.
-5. Click derecho en el nombre del proyecto > new > crear un nuevo Web service (simple). Guardar con el nombre de 'suma' y en el paquete `wssuma`. Crear desde cero.
-6. Escribir el siguiente código debajo del método `hello` y guardar cambios:
+2. En Netbeans, abrir el proyecto (`Ctrl+Mayús+O`) que se llama `tstRMI`.
+3. Revisar en File > Project Properties (tstRMI) > Run que en Main Class esté `example.hello.Distribuidor`.
+4. Arrancar el Glassfish Server.
+5. Crear un nuevo proyecto Web llamado `WSSUMA`. Asegurarse de que el servidor es glassfish y crear todo en default.
+6. Click derecho en el nombre del proyecto > new > crear un nuevo Web service (simple). Guardar con el nombre de 'suma' y en el paquete `wssuma`. Crear desde cero.
+7. Escribir el siguiente código debajo del método `hello` y guardar cambios:
 ```java
 @WebMethod(operationName = "suma")
 public int suma(@WebParam(name = "a") int a, @WebParam(name = "b") int b) {

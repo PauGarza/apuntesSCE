@@ -17,7 +17,7 @@ Objetivos:
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <form **action ="Servlet_00" method = "Post"**>
+        <form action ="Servlet_00" method = "Post">
         <br>operando A: <input type="text" value="5" name="opA"/>
         <br>operando A: <input type="text" value="8" name="opB"/>
         <br><input type="submit" value="Click para sumar"/>
@@ -26,7 +26,7 @@ Objetivos:
 </html>
 ```
 
-Cree un servlet, llámelo `servlet_00` y agregue el siguiente código:
+Cree un servlet, llámelo `Servlet_00` y agregue el siguiente código:
 ```java
 String deDonde = "";
 protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,8 +36,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
 	c = a + b;
 	response.setContentType("text/html;charset=UTF-8");
 	
-	try (PrintWriter out = response.getWriter()) {
-		/* TODO output your page here. You may use following sample code. */
+	try (PrintWriter out = response.getWriter()) {		
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
 		out.println("<head>");
@@ -76,7 +75,7 @@ Propósito: estresar el servicio `sayHello` de la interfaz remota `Hello` que se
 
 Premisas:
 1. Se tendrán al menos dos computadoras con java instalado o copiado.
-2. Se habrá “instalado” y probado de manera exitosa el estresador de manera individual en cada una de las computadoras (con experiencia suficiente no se requiere ejecutar solo el paso 4 en la(s) máquina(s) de los “clientes”.
+2. Se habrá "instalado" y probado de manera exitosa el estresador de manera individual en cada una de las computadoras (con experiencia suficiente no se requiere ejecutar solo el paso 4 en la(s) máquina(s) de los “clientes”.
 3. Se tiene conexión de red entre las máquinas participantes.
 
 #### Desarrollo: máquina servidora
@@ -134,7 +133,7 @@ Propósito: comprender el acceso a las clases dentro de los .jars y la ejecució
 ### 3.1 Modificación del distribuidor
 Copie el proyecto para el estresamiento de los clientes pojo del WS y modifique el código del distribuidor eliminando del código la cadena `example.hello.` de la instrucción
 ```java
-Class cl = Class.forName**_("example.hello." + args[0]);
+Class cl = Class.forName("example.hello." + args[0]);
 ```
 Para dejarlo como
 ```java
