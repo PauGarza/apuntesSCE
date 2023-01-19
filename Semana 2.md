@@ -10,7 +10,7 @@
 Ver la foto del diagrama. Sonia la tiene.
 
 1. Descargar el archivo `pruebaSimpleRMI.7z` en Canvas. 
-2. Guardarlo y descomprimirlo en la carmeta `\SCEBeto`.
+2. Guardarlo y descomprimirlo en la carpeta `\SCEBeto`.
 3. Abrir una ventana de la consola en esa dirección y ejecutar `java -version` para revisar que la versión de java sea 1.8.0_321.
 4. Crear un archivo ejecutando  `notepad cj111.bat` en la terminal y, en el archivo, escribir lo siguiente:
 ```bat
